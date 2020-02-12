@@ -1,5 +1,5 @@
 const app = require('./app');
-const port = require('./config').port || 5000;
+const port = require('./config').port || 5432;
 
 app.use( async (err, req, res, next) => {
   if(err) {

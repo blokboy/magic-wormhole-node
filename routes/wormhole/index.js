@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-/*
+
 router.post('/send', async (req, res) => {
   const { content } = req.body;
   let wormhole_id = Math.ceil(Math.random() * 9999999999);
@@ -76,5 +76,5 @@ router.post('/receive', async (req, res) => {
     return res.status(500).json({ message });
   }
 });
-*/
+
 module.exports = router;
