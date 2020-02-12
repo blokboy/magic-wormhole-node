@@ -1,6 +1,5 @@
 // Update with your config settings.
 require('dotenv').config();
-
 module.exports = {
 
   development: {
@@ -34,9 +33,9 @@ module.exports = {
   },
 
   production: {
-    client: 'mongodb',
+    client: 'pg',
     connection: {
-      database: process.env.MONGODB_URI,
+      database: process.env.DATABASE_URL,
     },
     pool: {
       min: 2,
