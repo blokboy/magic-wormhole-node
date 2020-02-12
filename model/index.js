@@ -1,46 +1,31 @@
-const url = require('url');
-const MongoClient = require('mongodb').MongoClient;
-
-let cachedDb = null;
-
-const connectToDatabase = (uri) => {
-  if(cachedDb) {
-    return cachedDb;
-  }
- 
-  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-  const db = await client.db(url.parse(uri).pathname.substr(1));
-
-  cachedDb = db;
-  return db;
-};
+const db = require('../data/dbConfig');
+const moment = require('moment');
 
 const get = async (tbl) => {
-  return await cachedDb.collection(tbl).find({});
+  return await db(tbl);
 };
 
 const findBy = async (tbl, filter) => {
-  return await cachedDb.collection(tbl).findOne(filter);
+  return await db(tbl).where(filter).first();
 };
 
 const findAllBy = async (tbl, filter) => {
-  return await cachedDb.collection(tbl).find(filter);
+  return await db(tbl).where(filter);
 };
 
 const add = async (tbl, data) => {
-  return await cachedDb.collection(tbl).insert(data);
+  return await db(tbl).insert(data).returning("id");
 };
 
 const remove = async (tbl, id) => {
-  return await cachedDb(tbl).remove({ id });
+  return await db(tbl).where({ id }).del();
 };
 
 const update = async (tbl, id, data) => {
-  return await db(tbl).update({ id }, { data });
+  return await db(tbl).where({ id }).update(data);
 };
 
 module.exports = {
-  connectToDatabase,
   get,
   findBy,
   findAllBy,

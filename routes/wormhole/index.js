@@ -1,8 +1,6 @@
 require('dotenv').config();
-const router = require('express').Router();
-const db = require('../../model').connectToDatabase(process.env.MONGODB_URI);
-//const db = await model.connectToDatabase(process.env.MONGODB_URI);
-
+const model = require('../../model');
+const db = require('../../data/dbConfig');
 
 router.get('/', async (req, res) => {
   try {
