@@ -1,10 +1,11 @@
 require('dotenv').config();
 const model = require('../../model');
+const db = require('../../data/dbConfig');
 const router = require('express').Router();
 
 router.get('/', async (req, res) => {
   try {
-    const wormholes = await model.get('Wormholes');
+    const wormholes = await db.get('Wormholes');
 
     if(wormholes) {
       return res.status(200).json({
