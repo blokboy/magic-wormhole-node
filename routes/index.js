@@ -2,7 +2,6 @@ const router = require('express').Router();
 
 const userAPIEndpoint = require('./user');
 const wormholeAPIEndpoint = require('./wormhole');
-const model = require('../model');
 
 router.use('/user', userAPIEndpoint);
 router.use('/wormhole', wormholeAPIEndpoint);

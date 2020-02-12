@@ -1,10 +1,9 @@
 require('dotenv').config();
 const model = require('../../model');
-const db = require('../../data/dbConfig');
 
 router.get('/', async (req, res) => {
   try {
-    const wormholes = await db.collection('Wormholes');
+    const wormholes = await model.get('Wormholes');
 
     if(wormholes) {
       return res.status(200).json({
