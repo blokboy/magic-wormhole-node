@@ -1,5 +1,7 @@
+require('dotenv').config();
 const app = require('./app');
-const port = require('./config').port || 5432;
+
+const port = process.env.PORT;
 
 app.use( async (err, req, res, next) => {
   if(err) {
