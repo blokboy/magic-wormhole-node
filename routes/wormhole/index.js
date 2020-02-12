@@ -18,4 +18,30 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/send', async (req, res) => {
+  const { content } = req.body;
+  
+  try {
+    if(!req.body.content) {
+      return res.status(409).json({ message: `You can't open an empty wormhole. (add content flag or content) ` });
+    }
+
+    const [ id ] = await model.add('Wormholes', { content });
+    if(id) {
+      const wormhole = await model.findBy('Wormholes', { id });
+      if(!wormhole) {
+        return res.status(404).json({ message: `There was an issue retrieving the wormhole!` });
+      }
+      return res.status(201).json({ 
+        message: `Wormhole successfully created! Send the user your Wormhole ID: ${wormhole.wormhole_id}` 
+      });
+    }
+  } catch({ message }) {
+
+  }
+});
+
+router.post('/receive', async (req, res) => {
+  const { id } = req.body;
+});
 module.exports = router;
