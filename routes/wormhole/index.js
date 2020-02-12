@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const model = require('../../model');
+const db = await model.connectToDatabase(process.env.MONGODB_URI);
+
 
 router.get('/', async (req, res) => {
   try {
-    const wormholes = await model.get('Wormholes');
+    const wormholes = await db.collection('Wormholes');
 
     if(wormholes) {
       return res.status(200).json({
@@ -18,6 +20,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+/*
 router.post('/send', async (req, res) => {
   const { content } = req.body;
   let wormhole_id = Math.ceil(Math.random() * 9999999999);
@@ -74,5 +77,5 @@ router.post('/receive', async (req, res) => {
     return res.status(500).json({ message });
   }
 });
-
+*/
 module.exports = router;

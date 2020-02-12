@@ -1,13 +1,19 @@
-/*
-  Here is the most abstracted "model" for interacting with our database using general queries
-  and simple login functionality. We can call these functions from within our routes to decide
-  how to interact with our DB as specified in the first require statement.
-*/
+const url = require('url');
+const MongoClient = require('mongodb').MongoClient;
 
-const db = require('knex')(require('../knexfile').development);
-const bcrypt = require('bcryptjs');
+let cachedDb = null;
 
-const { generateAuthToken } = require('../utils');
+const connectToDatabase = (uri) => {
+  if(cachedDb) {
+    return cachedDb;
+  }
+ 
+  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
+  const db = await client.db(url.parse(uri).pathname.substr(1));
+
+  cachedDb = db;
+  return db;
+};
 
 const get = async (tbl) => {
   return await db(tbl);
@@ -66,6 +72,7 @@ const login = async ({ email, password }) => {
 };
 
 module.exports = {
+  connectToDatabase,
   get,
   findBy,
   findAllBy,
