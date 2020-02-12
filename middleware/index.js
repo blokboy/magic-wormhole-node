@@ -18,7 +18,7 @@ const configureMiddleware = app => {
   app.use(logger('combined'));
   app.use(cors());
   app.use(express.json());
-  app.use('/API', routes);
+  app.use('/api', routes);
 };
 
 module.exports = configureMiddleware;
