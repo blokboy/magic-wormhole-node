@@ -16,59 +16,27 @@ const connectToDatabase = (uri) => {
 };
 
 const get = async (tbl) => {
-  return await db(tbl);
+  return await cachedDb.collection(tbl).find({});
 };
 
 const findBy = async (tbl, filter) => {
-  return await db(tbl).where(filter).first();
+  return await cachedDb.collection(tbl).findOne(filter);
 };
 
 const findAllBy = async (tbl, filter) => {
-  return db(tbl).where(filter);
+  return await cachedDb.collection(tbl).find(filter);
 };
 
 const add = async (tbl, data) => {
-  return await db(tbl).insert(data);
+  return await cachedDb.collection(tbl).insert(data);
 };
 
 const remove = async (tbl, id) => {
-  return await db(tbl).where({ id }).del();
+  return await cachedDb(tbl).remove({ id });
 };
 
 const update = async (tbl, id, data) => {
-  return await db(tbl).where({ id }).update(data);
-};
-
-const register = async ({ first_name, last_name, password, email }) => {
-  try {
-    const hash = bcrypt.hashSync(password, 12);
-    const newUser = { first_name, last_name, password: hash, email };
-    const [ id ] = await add('Users', newUser);
-    const token = await generateAuthToken(id); // does this need await?
-    return token;
-  } catch({ err }) {
-    return err;
-  }
-};
-
-const login = async ({ email, password }) => {
-  try {
-    const userWasFound = await findBy('Users', { email });
-    
-    if(userWasFound) {
-      const loginWasSuccessful = bcrypt.compareSync(password, userWasFound.password);
-      if(loginWasSuccessful) {
-        const token = await generateAuthToken(userWasFound);
-        return token;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  } catch({ err }) {
-    return err;
-  }
+  return await db(tbl).update({ id }, { data });
 };
 
 module.exports = {
@@ -79,6 +47,4 @@ module.exports = {
   add,
   remove,
   update,
-  register,
-  login
 };
