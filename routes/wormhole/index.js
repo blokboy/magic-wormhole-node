@@ -5,7 +5,7 @@ const router = require('express').Router();
 
 router.get('/', async (req, res) => {
   try {
-    const wormholes = await db.get('Wormholes');
+    const wormholes = await db('Wormholes');
 
     if(wormholes) {
       return res.status(200).json({
