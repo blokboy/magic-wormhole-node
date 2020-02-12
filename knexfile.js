@@ -1,7 +1,5 @@
 // Update with your config settings.
-const databaseUrl = require('./config').databaseUrl;
-const pg = require('pg');
-pg.defaults.ssl = true;
+require('dotenv').config();
 
 module.exports = {
 
@@ -36,9 +34,9 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
+    client: 'mongodb',
     connection: {
-      database: databaseUrl,
+      database: process.env.MONGODB_URI,
     },
     pool: {
       min: 2,
