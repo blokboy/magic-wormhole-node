@@ -1,3 +1,4 @@
+require('dotenv').config();
 const router = require('express').Router();
 const model = require('../../model');
 const db = await model.connectToDatabase(process.env.MONGODB_URI);
