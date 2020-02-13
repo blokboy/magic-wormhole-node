@@ -1,8 +1,8 @@
 # NodeTemplate
 a template repo for my typical Node setup
 
-## https://magic-wormhole.com/api/wormhole/send ({ content: '' });
-## https://magic-wormhole.com/api/wormhole/receive ({ wormhole_id })
+## https://magic-wormhole.herokuapp.com/api/wormhole/send ({ content: '' });
+## https://magic-wormhole.herokuapp.com/api/wormhole/receive ({ wormhole_id })
 
 
 
