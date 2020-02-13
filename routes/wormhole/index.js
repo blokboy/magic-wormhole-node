@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 
 router.post('/send', async (req, res) => {
   const { content } = req.body;
-  let wormhole_id = Math.ceil(Math.random() * 9999999999);
+  let wormhole_id = Math.ceil(Math.random() * 999999);
 
   try {
     if(!content) {
@@ -37,7 +37,7 @@ router.post('/send', async (req, res) => {
     
     let wormhole = await model.findBy('Wormholes', { wormhole_id });
     if(wormhole) {
-      wormhole_id = Math.ceil(Math.random() * 9999999999);
+      wormhole_id = Math.ceil(Math.random() * 999999);
     }
 
     const wormholeIdUpdated = await model.update('Wormholes', id, { wormhole_id });
